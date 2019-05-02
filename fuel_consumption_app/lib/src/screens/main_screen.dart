@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:fuel_consumption_app/src/core/repository.dart';
+import 'package:fuel_consumption_app/src/dialogs/add_refuel_dialog.dart';
+import 'package:fuel_consumption_app/src/dialogs/clear_all_dialog.dart';
+import 'package:fuel_consumption_app/src/core/state_container.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -11,19 +13,26 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
-  Repository _repository;
   DateFormat _dateFormat;
+
+  Future<Null> buildDialog(BuildContext context, WidgetBuilder builder) async {
+    return showDialog<Null>(
+      context: context,
+      barrierDismissible: true,
+      builder: builder
+    );
+  }
 
   @override
   void initState() {
-    _repository = Repository();
     _dateFormat = DateFormat('d. MMMM y');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final StateContainerState state = StateContainer.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Row(children: <Widget>[
@@ -39,7 +48,7 @@ class _MainScreenState extends State<MainScreen> {
             child: ListTile(
               leading: Icon(Icons.show_chart),
               title: Text('Avg. consumption'),
-              trailing: Text('${_repository.refuelsManager.averageConsumption.toStringAsFixed(1)}l/100km'),
+              trailing: Text('${state.repository.refuelsManager.averageConsumption.toStringAsFixed(1)}l/100km'),
             ),
             margin: EdgeInsets.all(10.0),
           ),
@@ -48,15 +57,20 @@ class _MainScreenState extends State<MainScreen> {
             child: Column(children: <Widget>[
               ListTile(
                 leading: Icon(Icons.history),
-                title: Text("History of refuels"),
-                trailing: FlatButton.icon(onPressed: null, icon: Icon(Icons.clear), label: Text('Clear history')),
+                title: Text("History of Refuels"),
+                trailing: FlatButton.icon(
+                  onPressed: () => buildDialog(context, (BuildContext context) => ClearAllDialog()), 
+                  icon: Icon(Icons.clear), 
+                  label: Text('Clear history')
+                ),
               ),
               Expanded(child: ListView.builder(
-                  itemCount: _repository.refuelsManager.refuels.length,
+                  itemCount: state.repository.refuelsManager.refuels.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
-                      title: Text('${_dateFormat.format(_repository.refuelsManager.refuels[index].dateTime)}'),
-                      subtitle: Text('Driven length: ${_repository.refuelsManager.refuels[index].drivenLength} km, refueled: ${_repository.refuelsManager.refuels[index].refueledLitres} l'),
+                      title: Text('${_dateFormat.format(state.repository.refuelsManager.refuels[index].dateTime)}'),
+                      subtitle: Text('Driven length: ${state.repository.refuelsManager.refuels[index].drivenLength} km, ' +
+                                    'refueled: ${state.repository.refuelsManager.refuels[index].refueledLitres} l'),
                     );
                   }
               ),),
@@ -67,7 +81,7 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           tooltip: "Add refuel",
-          onPressed: null
+          onPressed: () => buildDialog(context, (BuildContext context) => AddRefuelDialog())
       ),
     );
   }
