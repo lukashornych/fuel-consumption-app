@@ -11,10 +11,10 @@ class RefuelsManager extends Object {
     double refueledSum = 0;
     double drivenSum = 0;
 
-    refuels.forEach((refuel) {
-      refueledSum += refuel.refueledLitres;
-      drivenSum += refuel.drivenLength;
-    });
+    for (int i = 0; i < refuels.length; i++) {
+      if (i < (refuels.length - 1)) refueledSum += refuels[i].refueledLitres;
+      drivenSum += refuels[i].drivenLength;
+    }
 
     return refueledSum / drivenSum * 100.0;
   }
