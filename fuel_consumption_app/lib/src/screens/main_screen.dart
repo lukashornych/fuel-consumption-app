@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:fuel_consumption_app/src/dialogs/add_refuel_dialog.dart';
 import 'package:fuel_consumption_app/src/dialogs/clear_all_dialog.dart';
 import 'package:fuel_consumption_app/src/core/state_container.dart';
+import 'package:fuel_consumption_app/src/theme/theme.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -37,8 +38,8 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         title: Row(children: <Widget>[
           Icon(Icons.local_gas_station),
-          Container(width: 10.0,),
-          Text('Fuel Consumption')
+          Container(width: FuelConsumptionTheme.defaultPadding,),
+          Text('Fuel Consumption'),
         ],),
       ),
       body: Column(
@@ -50,10 +51,10 @@ class _MainScreenState extends State<MainScreen> {
               title: Text('Avg. consumption'),
               trailing: Text('${state.repository.refuelsManager.averageConsumption.toStringAsFixed(1)}l/100km'),
             ),
-            margin: EdgeInsets.all(10.0),
+            margin: EdgeInsets.all(FuelConsumptionTheme.defaultPadding),
           ),
           Expanded(child: Card(
-            margin: EdgeInsets.all(10.0),
+            margin: EdgeInsets.all(FuelConsumptionTheme.defaultPadding),
             child: Column(children: <Widget>[
               ListTile(
                 leading: Icon(Icons.history),

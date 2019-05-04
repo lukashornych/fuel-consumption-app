@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:fuel_consumption_app/src/core/state_container.dart';
+import 'package:fuel_consumption_app/src/theme/theme.dart';
 
 class AddRefuelDialog extends StatefulWidget {
   @override
@@ -30,9 +31,17 @@ class _AddRefuelDialogState extends State<AddRefuelDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          TextField(controller: drivenLengthText, keyboardType: TextInputType.number,),
-          Container(height: 10.0,),
-          TextField(controller: refueledText, keyboardType: TextInputType.number,),
+          TextField(
+            decoration: FuelConsumptionTheme.getInputDecoration('Driven length (km)'), 
+            controller: drivenLengthText, 
+            keyboardType: TextInputType.number,
+          ),
+          Container(height: FuelConsumptionTheme.defaultPadding,),
+          TextField(
+            decoration: FuelConsumptionTheme.getInputDecoration('Refueled (litres)'),
+            controller: refueledText, 
+            keyboardType: TextInputType.number,
+          ),
       ],),
       actions: <Widget>[
         FlatButton(

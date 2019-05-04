@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:fuel_consumption_app/src/screens/main_screen.dart';
+import 'package:fuel_consumption_app/src/theme/theme.dart';
 
 class FuelConsumptionApp extends StatelessWidget {
   @override
@@ -8,6 +9,7 @@ class FuelConsumptionApp extends StatelessWidget {
     return MaterialApp(
       title: 'Fuel Consumption',
       home: MainScreen(),
+      theme: FuelConsumptionTheme.themeData,
     );
   }
 }
