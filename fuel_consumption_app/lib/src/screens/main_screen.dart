@@ -70,8 +70,10 @@ class _MainScreenState extends State<MainScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
                       title: Text('${_dateFormat.format(state.repository.refuelsManager.refuels[index].dateTime)}'),
-                      subtitle: Text('Driven length: ${state.repository.refuelsManager.refuels[index].drivenLength} km, ' +
-                                    'refueled: ${state.repository.refuelsManager.refuels[index].refueledLitres} l'),
+                      subtitle: (index > 0) ? 
+                        Text('Driven length: ${state.repository.refuelsManager.refuels[index].drivenLength} km, ' +
+                            'refueled: ${state.repository.refuelsManager.refuels[index].refueledLitres} l') :
+                        Text('Refueled: ${state.repository.refuelsManager.refuels[index].refueledLitres} l'),
                     );
                   }
               ),),

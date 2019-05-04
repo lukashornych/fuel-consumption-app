@@ -35,6 +35,7 @@ class _AddRefuelDialogState extends State<AddRefuelDialog> {
             decoration: FuelConsumptionTheme.getInputDecoration('Driven length (km)'), 
             controller: drivenLengthText, 
             keyboardType: TextInputType.number,
+            enabled: state.repository.refuelsManager.refuels.length > 0,
           ),
           Container(height: FuelConsumptionTheme.defaultPadding,),
           TextField(
@@ -47,7 +48,10 @@ class _AddRefuelDialogState extends State<AddRefuelDialog> {
         FlatButton(
           child: Text('ADD'),
           onPressed: () {
-            state.addRefuel(int.parse(drivenLengthText.text), double.parse(refueledText.text));
+            state.addRefuel(
+              (state.repository.refuelsManager.refuels.length > 0) ? int.parse(drivenLengthText.text) : 0, 
+              double.parse(refueledText.text)
+            );
             Navigator.of(context).pop();
           },
         )
