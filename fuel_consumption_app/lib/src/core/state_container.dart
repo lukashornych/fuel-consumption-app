@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:fuel_consumption_app/src/core/repository.dart';
 import 'package:fuel_consumption_app/src/core/refuel.dart';
+import 'package:fuel_consumption_app/src/core/refuels_manager.dart';
 
 class StateContainer extends StatefulWidget {
 
@@ -27,20 +28,28 @@ class StateContainerState extends State<StateContainer> {
   void initState() {
     repository = Repository();
     super.initState();
+
+    _loadData();
   }
 
-  void updateData(VoidCallback toUpdate) {
+  void _loadData() async {
+    repository.refuelsManager = await RefuelsManager.loadFromLocalStorage();
+    setState(() {});
+  }
+
+  void _updateData(VoidCallback toUpdate) {
     setState(() {
       toUpdate();
+      repository.refuelsManager.saveToLocalStorage();
     });
   }
 
   void addRefuel(int drivenLength, double refueled) {
-    updateData(() => repository.refuelsManager.refuels.add(Refuel(DateTime.now(), drivenLength, refueled)));
+    _updateData(() => repository.refuelsManager.refuels.add(Refuel(DateTime.now(), drivenLength, refueled)));
   }
 
   void clearAll() {
-    updateData(() => repository.refuelsManager.refuels.clear());
+    _updateData(() => repository.refuelsManager.refuels.clear());
   }
 
   @override
