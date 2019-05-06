@@ -18,6 +18,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: any
   json_serializable: any
+  flutter_launcher_icons: any
 
 flutter:
   uses-material-design: true
@@ -52,3 +53,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
+
+flutter_icons:
+  android: true
+  image_path_android: 'assets/launcher/ic_launcher.png'
