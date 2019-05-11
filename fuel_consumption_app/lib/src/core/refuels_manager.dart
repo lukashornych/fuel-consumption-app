@@ -31,6 +31,15 @@ class RefuelsManager extends Object {
     return refueledSum / drivenSum * 100.0;
   }
 
+  double consumptionOfSingleRefuel(int index) {
+    if (index == 0) return 0;
+
+    double refueled = refuels[index - 1].refueledLitres;
+    int driven = refuels[index].drivenLength;
+
+    return refueled / driven * 100.0;
+  }
+
   static Future<File> _getLocalSaveFile() async {
     Directory dir = await getApplicationDocumentsDirectory();
     File file = File('${dir.path}/$_saveFilePath');

@@ -71,9 +71,44 @@ class _MainScreenState extends State<MainScreen> {
                     return ListTile(
                       title: Text('${_dateFormat.format(state.repository.refuelsManager.refuels[index].dateTime)}'),
                       subtitle: (index > 0) ? 
-                        Text('Driven length: ${state.repository.refuelsManager.refuels[index].drivenLength} km, ' +
-                            'refueled: ${state.repository.refuelsManager.refuels[index].refueledLitres} l') :
-                        Text('Refueled: ${state.repository.refuelsManager.refuels[index].refueledLitres} l'),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(height: 5,),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text('Driven length'),
+                                Text('${state.repository.refuelsManager.refuels[index].drivenLength} km')
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text('Refueled'),
+                                Text('${state.repository.refuelsManager.refuels[index].refueledLitres} l')
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text('Consumption'),
+                                Text('${state.repository.refuelsManager.consumptionOfSingleRefuel(index).toStringAsFixed(1)}l/100km')
+                              ],
+                            )
+                          ],
+                        ) :
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text('Refueled'),
+                            Text('${state.repository.refuelsManager.refuels[index].refueledLitres} l')
+                          ],
+                        )
                     );
                   }
               ),),
